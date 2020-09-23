@@ -5,18 +5,27 @@ import TruckPanel from './TruckPanel';
 import MoveButton from './MoveButton';
 import './App.css';
 
-const truckList = [];
+const truckList = [
+  {name: "MCT1", year: 2015, currentLocation: 1},
+  {name: "MCT2", year: 2015, currentLocation: 2}
+];
+
+const locationList = [
+  {id: 1, name: "theatre lot"},
+  {id: 2, name: "secondary lot"}
+];
 
 const TruckList = (props) => {
-  <div>
-    {truckList.map(truck => <TruckPanel {...truck}/>)}<TruckPanel />
-  </div>
+  return (<div>
+    {truckList.map(truck => <TruckPanel {...truck}/>)}
+  </div>)
 };
 
 function App() {
   return (
     <div className="App">
       <MoveButton />
+      <TruckList />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

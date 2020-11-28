@@ -1,6 +1,8 @@
 <template>
   <div>
       <h1> Hi calendar clowns</h1>
+      <span> type your event info here: </span>
+      <input type=textarea v-model="eventInput" />
       <FullCalendar :options="calendarOptions"/>
   </div>
 </template>
@@ -17,12 +19,39 @@ export default {
     components: {
         FullCalendar
     },
-    data: () => ({
-        calendarOptions: {
-            plugins: [DayGridPlugin, TimeGridPlugin, InteractionPlugin, ListPlugin],
-            initialView: 'dayGridMonth'
+    data() {
+        return {
+            calendarOptions: {
+                plugins: [DayGridPlugin, TimeGridPlugin, InteractionPlugin, ListPlugin],
+                initialView: 'dayGridMonth',
+                dateClick: this.addEvent,
+                eventClick: this.handleEventClick,
+                events: []
+            },
+            eventInput: ""
         }
-    })
+    },
+    methods: {
+        addEvent: function(arg) {
+            if (this.eventInput.length > 0) {
+                let newTitle = this.eventInput;
+                let clickedDate = arg.dateStr;
+                let newEvent = {
+                    id: new Date,
+                    title: newTitle,
+                    date: clickedDate
+                }
+                this.calendarOptions.events.push(newEvent);
+            }
+        },
+        handleEventClick: function(arg) {
+            let eventObj = arg.event;
+            let indexToRemove = this.calendarOptions.events.findIndex(event => {
+                return event.title == eventObj.title && event.date == eventObj.date
+            })
+            this.calendarOptions.events.splice(indexToRemove, 1);
+        }
+    }
 }
 </script>
 

@@ -45,9 +45,8 @@ export default {
             }
         },
         handleEventClick: function(arg) {
-            let eventObj = arg.event;
             let indexToRemove = this.calendarOptions.events.findIndex(event => {
-                return event.title == eventObj.title && event.date == eventObj.date
+                return event.title == arg.event.title && event.id == arg.event._def.publicId
             })
             this.calendarOptions.events.splice(indexToRemove, 1);
         }

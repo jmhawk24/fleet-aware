@@ -4,9 +4,10 @@
     <location-box 
         v-for="location in locations" 
         :key="location.id" 
-        :trucks="trucks" 
+        :allTrucks="allTrucks" 
         :location="location"
-        :locationList="locations"></location-box>
+        :locationList="locations"
+        @forwarded-move-event="receiveForwardedMoveEvent($event)"></location-box>
   </div>
 </template>
 
@@ -15,7 +16,16 @@ import LocationBox from './LocationBox'
 
 var truckData = [
     {id: 1, name: 'MCT1', locationId: 1},
-    {id: 2, name: 'MCT2', locationId: 1}
+    {id: 2, name: 'MCT2', locationId: 1},
+    {id: 3, name: 'MCT3', locationId: 1},
+    {id: 4, name: 'MCT90', locationId: 1},
+    {id: 5, name: 'MCT91', locationId: 1},
+    {id: 6, name: 'MCT92', locationId: 1},
+    {id: 7, name: 'MCT93', locationId: 1},
+    {id: 8, name: 'MCT1600', locationId: 1},
+     {id: 9, name: 'MCT1601', locationId: 1},
+     {id: 10, name: 'MCT1608', locationId: 1},
+     {id: 11, name: 'MCT1609', locationId: 1}
 ];
 
 var locationData = [
@@ -27,13 +37,26 @@ var locationData = [
 export default {
   components: { LocationBox },
   computed: {
-      trucks: function() {
-          return truckData
-      },
       locations: function() {
           return locationData
       }
   },
+  data() {
+      return {
+          allTrucks: truckData
+      }
+  },
+  methods: {
+      receiveForwardedMoveEvent: function($event) {
+          let vehicleId = $event.vehicleId;
+          let newLocationId = $event.newLocationId
+          this.allTrucks.forEach( truck => {
+              if (truck.id == vehicleId) {
+                  truck.locationId = newLocationId
+              }
+          })
+      }
+  }
 }
 </script>
 

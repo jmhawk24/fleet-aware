@@ -6,7 +6,7 @@
             :key="truck.id" 
             :truckProp="truck"
             :locationList="locationList"
-            @moveEvent="receiveMoveEvent($event)">
+            @moveVehicleEvent="receiveMoveEvent($event)">
         </truck-row>
     </div>
 </template>
@@ -16,10 +16,10 @@ import TruckRow from './TruckRow'
 
 export default {
     components: { TruckRow },
-    props: ['trucks', 'location', 'locationList'],
+    props: ['allTrucks', 'location', 'locationList'],
     computed: {
         currentTrucks: function() {
-            return this.trucks.filter( (truck) => {
+            return this.allTrucks.filter( (truck) => {
                 return truck.locationId === this.location.id
             })
         }
@@ -31,7 +31,8 @@ export default {
     },
     methods: {
         receiveMoveEvent: function($event) {
-            this.$emit('forward-move-event', $event);
+            let newEvent = $event
+            this.$emit('forwarded-move-event', newEvent);
         }
     }
 }

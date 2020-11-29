@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span>{{truck.name}}</span>
+      <span>{{truckProp.name}}</span>
       <select v-model="selected">
           <option disabled value="">Select New Location</option>
           <option 
@@ -18,11 +18,6 @@
 <script>
 export default {
     props: ['truckProp', 'locationList'],
-    computed: {
-        truck: function() {
-            return this.truckProp
-        },
-    },
     data() {
         return {
             selected: 0
@@ -31,7 +26,7 @@ export default {
     methods: {
         handleMoveEvent: function() {
             this.$emit('moveVehicleEvent', {
-                vehicleId: this.truck.id,
+                vehicleId: this.truckProp.id,
                 newLocationId: this.selected
             })
         }
